@@ -48,20 +48,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 
     // ViewModel
-    implementation 'androidx.lifecycle:lifecycle-viewmodel:2.3.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0"
 
     // RxKotlin
-    implementation 'io.reactivex.rxjava3:rxandroid:3.1.0'
-    implementation 'io.reactivex.rxjava3:rxkotlin:3.1.0'
-
-    // Data Binding
-    implementation 'androidx.databinding:databinding-runtime:4.1.4'
-
-    // View Binding
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
 
     // Paging
-    def paging_version = "3.0.0"
-    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+    implementation "androidx.paging:paging-runtime-ktx:3.0.1"
 
 }
