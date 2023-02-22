@@ -31,9 +31,9 @@ android {
         jvmTarget = '1.8'
     }
 
-    // data binding 추가.
     buildFeatures {
-        dataBinding true
+        dataBinding true // data binding 추가.
+        viewBinding true // view binding 추가.
     }
 }
 
@@ -53,5 +53,9 @@ dependencies {
 
     // Data Binding
     implementation 'androidx.databinding:databinding-runtime:4.1.4'
+
+    // View Binding
+    implementation 'androidx.core:core-ktx:1.7.0'
+
 
 }
