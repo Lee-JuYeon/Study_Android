@@ -30,6 +30,11 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
+    // data binding 추가.
+    buildFeatures {
+        dataBinding true
+    }
 }
 
 dependencies {
@@ -45,4 +50,8 @@ dependencies {
     // RxKotlin
     implementation 'io.reactivex.rxjava3:rxandroid:3.1.0'
     implementation 'io.reactivex.rxjava3:rxkotlin:3.1.0'
+
+    // Data Binding
+    implementation 'androidx.databinding:databinding-runtime:4.1.4'
+
 }
