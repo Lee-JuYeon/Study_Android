@@ -4,7 +4,7 @@
 # 당신은 안드로이드를 제대로 프로그래밍하고 있는가? 🤔
 
 | **View**  | **Stack**       | **Success?**    | 
-| ------------- | ----------- | :-----------: |
+| ------------- | ----------- | :----: |
 | RecyclerView | BaseAdapter + BaseViewHolder + BaseDiffUtil + ViewHolderClickListener + ViewDataBinding + RxKotlin | ✅ |
 | Fragment|| 😔 |
 | ViewPager|| 😔 |
@@ -14,7 +14,7 @@
 | Blur || 😔 |
 
 |**Skill**|**Success?**| 
-|:---------------------------:|:-----------:|
+|:---------------------------|:----:|
 |MVVM|😔|
 |MVI|😔|
 |RxKotlin|😔|
