@@ -7,27 +7,31 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.cavss.studyandroid.BR
 
 abstract class BaseAdapter{
 
     abstract class Adapter<MODEL : Any, BIND : ViewDataBinding>() : RecyclerView.Adapter<BaseViewHolder<MODEL, BIND>>(){
-        protected var clickListener: ViewHolderClickListener<MODEL>? = null
-        fun setOnClickListener(listener: ViewHolderClickListener<MODEL>) {
-            clickListener = listener
-        }
+//        protected var clickListener: ViewHolderClickListener<MODEL>? = null
+//        fun setOnClickListener(listener: ViewHolderClickListener<MODEL>) {
+//            clickListener = listener
+//        }
 
         private val items = mutableListOf<MODEL>()
-        abstract fun getDiffUtil(oldList: List<MODEL>, newList: List<MODEL>) : BaseDiffUtil<MODEL>
-        fun updateList(newItems : List<MODEL>){
+//        abstract fun getDiffUtil(oldList: List<MODEL>, newList: List<MODEL>) : BaseDiffUtil<MODEL>
+        fun updateList(newItems : List<MODEL>?){
             try{
-                val diffCallback : BaseDiffUtil<MODEL> = getDiffUtil(items, newItems)
-                val diffResult = DiffUtil.calculateDiff(diffCallback)
-
-                items.clear()
-                items.addAll(newItems)
+                val diffResult = DiffUtil.calculateDiff(
+                    object : BaseDiffUtil<MODEL>(
+                        oldList = items,
+                        newList = newItems ?: mutableListOf()
+                    ){},
+                    false
+                )
 
                 diffResult.dispatchUpdatesTo(this)
+                items.clear()
+                items.addAll(newItems ?: mutableListOf())
+
                 Log.d("mDebug", "BaseAdapter, updateList // updateList success")
             }catch (e:Exception){
                 Log.e("mException", "BaseAdapter, updateList // Exception : ${e.message}")
@@ -53,24 +57,24 @@ abstract class BaseAdapter{
         그리고 아이탬 갯수가 많으면 onBindViewholder에 적용하는게 더 용이하고,
         갯수가 적으면 onCreateViewHodler에 적용하는게 더 빠르다.
          */
-        abstract fun setViewHolderClass(binding: BIND): BaseViewHolder<MODEL, BIND>
-        abstract fun setViewHolderXmlFileName(viewType: Int): Int
+//        abstract fun setViewHolderClass(binding: BIND): BaseViewHolder<MODEL, BIND>
+        // viewholder의 xml파일을 넣는곳.
+        abstract fun setViewHolderXmlFileName(viewType: Int): Int // TODO: ViewHolder의 XML파일을 넣는 곳.
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<MODEL, BIND> {
-            return setViewHolderClass(
-                DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.context),
-                    setViewHolderXmlFileName(viewType),
-                    parent,
-                    false
-                )
+            val binding : BIND = DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                setViewHolderXmlFileName(viewType),
+                parent,
+                false
             )
+            return object : BaseViewHolder<MODEL, BIND>(binding = binding){}
         }
 
-        abstract fun setViewHolderVariable(position: Int, model : MODEL?) : List<Pair<Int, MODEL>>
+        abstract fun setViewHolderVariable(position: Int, model : MODEL?) : List<Pair<Int, Any>>
         override fun onBindViewHolder(holder: BaseViewHolder<MODEL, BIND>, position: Int) {
             try{
                 holder.let {
-                    it.bind(items[position], position, clickListener!!)
+//                    it.bind(items[position], position, clickListener!!)
                     it.bindVariable(setViewHolderVariable(position, items[position]))
                     Log.d("mDebug", "BaseAdapter, onBindViewHolder // binding success")
                 }
@@ -85,7 +89,7 @@ abstract class BaseAdapter{
             try{
                 super.onViewRecycled(holder)
                 holder.let {
-                    it.bind(null, 0, null)
+//                    it.bind(null, 0, null)
                     it.bindVariable(setViewHolderVariable(0, null))
                     Log.d("mDebug", "BaseAdapter, onViewRecycled // null success")
                 }
