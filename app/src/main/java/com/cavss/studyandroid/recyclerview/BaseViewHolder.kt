@@ -1,7 +1,6 @@
 package com.cavss.studyandroid.recyclerview
 
 import android.util.Log
-import android.view.LayoutInflater
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
 
@@ -15,11 +14,10 @@ abstract class BaseViewHolder<MODEL : Any, BIND : ViewDataBinding>(
 
     따라서 동작 이벤트는 코루틴 대신 CallBack interface를 사용하여
     적은 메모리를 사용하고 메모리 누수를 방지할 수 있다.
-
      */
-    abstract fun bind(model: MODEL?, position : Int, clickListener: ViewHolderClickListener<MODEL>?)
+//    abstract fun bind(model: MODEL?, position : Int, clickListener: ViewHolderClickListener<MODEL>?)
 
-    fun bindVariable(variableList : List<Pair<Int, MODEL>>?){
+    fun bindVariable(variableList : List<Pair<Int, Any>>?){
         try{
             variableList?.forEach {
                 binding.setVariable(it.first, it.second)
