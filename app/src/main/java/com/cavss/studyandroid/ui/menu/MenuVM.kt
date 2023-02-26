@@ -47,6 +47,7 @@ class MenuVM() : ViewModel() {
                 MenuModel("Retrofit")
             )
         )
+        Log.d("mDebug", "MenuVM, init // init on")
     }
 
     override fun onCleared() {
