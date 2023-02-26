@@ -9,7 +9,7 @@
 
 | **View**  | **Stack**       | **Success?**    | 
 | ------------- | ----------- | :----: |
-| [RecyclerView](https://github.com/Lee-JuYeon/Study_Android/tree/master/app/src/main/java/com/cavss/studyandroid/recyclerview) | BaseAdapter + BaseViewHolder + BaseDiffUtil + ViewHolderClickListener + ViewDataBinding + RxKotlin | ✅ |
+| [RecyclerView](https://github.com/Lee-JuYeon/Study_Android/tree/master/app/src/main/java/com/cavss/studyandroid/recyclerview) | BaseAdapter + BaseViewHolder + BaseDiffUtil + ViewHolderClickListener + ViewDataBinding + MVVM | ✅ |
 | Fragment|| 😔 |
 | ViewPager|| 😔 |
 | GridView|| 😔 |
