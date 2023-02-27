@@ -27,7 +27,7 @@
 |Flow|😔|
 |Room|😔|
 |AES256|😔|
-|Permission|😔|
+|Permission|🤔|
 |Permission JetpackCompose|😔|
 |Retrofit2.0|😔|
 
