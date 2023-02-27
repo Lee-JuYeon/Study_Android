@@ -16,7 +16,7 @@ import com.cavss.studyandroid.recyclerview.ViewHolderClickListener
 import com.cavss.studyandroid.ui.menu.MenuModel
 import com.cavss.studyandroid.ui.menu.MenuVM
 import com.cavss.studyandroid.BR
-
+import com.cavss.studyandroid.permission.PermissionManager
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,6 +31,7 @@ class MainActivity : AppCompatActivity() {
      */
     private val menuVM by viewModels<MenuVM>()
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
@@ -38,8 +39,6 @@ class MainActivity : AppCompatActivity() {
             setMenuRecyclerView(menuRecyclerView)
         }
         setContentView(binding.root)
-
-
     }
 
 
