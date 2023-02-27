@@ -59,4 +59,9 @@ dependencies {
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:3.0.1"
 
+    // location based AR
+    implementation 'com.google.android.gms:play-services-auth:20+'
+    implementation 'com.google.android.gms:play-services-location:19+'
+    implementation 'com.google.android.gms:play-services-maps:18.0.2'
+
 }
