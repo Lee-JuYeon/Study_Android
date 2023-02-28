@@ -5,18 +5,24 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cavss.studyandroid.databinding.ActivityMainBinding
 import com.cavss.studyandroid.databinding.ItemMainBinding
-import com.cavss.studyandroid.recyclerview.BaseAdapter
-import com.cavss.studyandroid.recyclerview.BaseDiffUtil
-import com.cavss.studyandroid.recyclerview.BaseViewHolder
-import com.cavss.studyandroid.recyclerview.ViewHolderClickListener
-import com.cavss.studyandroid.ui.menu.MenuModel
-import com.cavss.studyandroid.ui.menu.MenuVM
+import com.cavss.studyandroid.ui.custom.recyclerview.BaseAdapter
+import com.cavss.studyandroid.ui.custom.recyclerview.BaseDiffUtil
+import com.cavss.studyandroid.ui.custom.recyclerview.BaseViewHolder
+import com.cavss.studyandroid.ui.custom.recyclerview.ViewHolderClickListener
+import com.cavss.studyandroid.ui.screen.menu.MenuModel
+import com.cavss.studyandroid.ui.screen.menu.MenuVM
 import com.cavss.studyandroid.BR
-import com.cavss.studyandroid.permission.PermissionManager
+import com.cavss.studyandroid.skill.permission.PermissionManager
+import com.cavss.studyandroid.ui.custom.ar.FragLocationBasedAR
+import com.cavss.studyandroid.ui.screen.menu.FragMenu
+import com.cavss.studyandroid.ui.screen.menu.Menu
+import com.cavss.studyandroid.ui.screen.menu.Menu.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -28,85 +34,69 @@ class MainActivity : AppCompatActivity() {
         반대로 by viewModels는 null safety하며, VM이 초기화 되지 않은 경우 시스템이 자동적으로 새 인스턴스를 생성.
     2. 코드 간소화 : VM의 인스턴스를 생성하고 관리하는 코드를 간소화 할 수 있으며 VM의 생명주기를 더 쉽게 관리.
     3. 범용성 : Dagger와 같은 의존성 주입 프레임워크를 사용하여 VM을 주입가능.
+
      */
-    private val menuVM by viewModels<MenuVM>()
+    private var menuVM : MenuVM? = null
     private lateinit var binding: ActivityMainBinding
+
+    private val fragMenu = FragMenu()
+    private val fragAR = FragLocationBasedAR()
+    private fun changeFragment(frag : Menu){
+        try{
+            val manager = (this as FragmentActivity).supportFragmentManager.beginTransaction()
+            when(frag){
+                RecyclerView -> manager.replace(R.id.frame, fragMenu).commit()
+                LocationBasedAR -> manager.replace(R.id.frame, fragAR).commit()
+                Fragment -> manager.replace(R.id.frame, fragMenu).commit()
+                ViewPager2 -> manager.replace(R.id.frame, fragMenu).commit()
+                GridView -> manager.replace(R.id.frame, fragMenu).commit()
+                Blur -> manager.replace(R.id.frame, fragMenu).commit()
+            }
+        }catch (e:Exception){
+            Log.e("mException", "MainActivity, changeFragment  // Exception : ${e.message}")
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.run{
-            setMenuRecyclerView(menuRecyclerView)
+
+        }
+
+        /*
+        자식 Fragment들과 같은 인스턴스를 가진 VM을 공유하기 위해선
+        ViewModelProvider을 사용하여 Activity에서 선언해주어야한다.
+        그리고 자식 Fragment에선 vm : VM by activityViewModles() 메소드를 사용하여 공유받도록한다.
+
+        viewModels()는 ViewModelProvider의 확장함수로 사용되는 범위가
+        'Fragment', 'FragmentActivity'와 같은 범위 내에서 제한된다.
+        따라서 viewModels()함수를 사용하여 생성된 VM은, 해당 VM을 선언한 Fragment 내부에서만 공유됨.
+         */
+        menuVM = ViewModelProvider(this@MainActivity).get(MenuVM::class.java)
+        menuVM?.getFragmentType?.observe(this@MainActivity) { type ->
+            try {
+                changeFragment(type)
+            } catch (e: Exception) {
+                changeFragment(RecyclerView)
+                Log.e("mException", "MainActivity, onCreate, menuVM.getFragmentType.observe // Exception : ${e.message}")
+            } catch (e: NoSuchElementException) {
+                changeFragment(RecyclerView)
+                Log.e("mException","MainActivity, onCreate, menuVM.getFragmentType.observe  // NoSuchElementException : ${e.message}")
+            }
         }
         setContentView(binding.root)
     }
 
 
-    private var customAdapter : BaseAdapter.Adapter<MenuModel, ItemMainBinding>? = null
-    private fun updateMenuList(newList : List<MenuModel>){
-        try{
-            customAdapter?.updateList(newList)
-        }catch (e:Exception){
-            Log.e("mEXception", "MainAcitivity, updateMenuList // Exception : ${e.message}")
-        }
-    }
-    private fun setMenuRecyclerView(recyclerView : RecyclerView){
-        try{
-            val clickEvent = object : ViewHolderClickListener<MenuModel> {
-                override fun onItemClick(model: MenuModel, position: Int) {
-                    Log.d("mDebug", "MainActivity, setMenuRecyclerView, ViewHolderClickListener // Debug : ${model.menu} clicked")
-                }
-            }
 
-            customAdapter = object : BaseAdapter.Adapter<MenuModel, ItemMainBinding>(){
-//                override fun getDiffUtil(oldList: List<MenuModel>,newList: List<MenuModel>): BaseDiffUtil<MenuModel> {
-//                    TODO("Not yet implemented")
-//
-//                }
-//                override fun setViewHolderClass(binding: ItemMainBinding): BaseViewHolder<MenuModel, ItemMainBinding> {
-//
-//                }
-
-                override fun setViewHolderXmlFileName(viewType: Int): Int {
-                    return R.layout.item_main
-                }
-
-                override fun setViewHolderVariable(position: Int,model: MenuModel?): List<Pair<Int, Any>> {
-                    return listOf(
-                        BR.model to model!!,
-                        BR.position to position,
-                        BR.clickCallback to clickEvent
-                    )
-                }
-
-            }
-
-            recyclerView.apply {
-                adapter = customAdapter
-                setHasFixedSize(true)
-                layoutManager = LinearLayoutManager(this@MainActivity).apply{
-                    orientation = LinearLayoutManager.VERTICAL
-                    isItemPrefetchEnabled = false
-                }
-//                addItemDecoration(CustomItemGap(10))
-                setItemViewCacheSize(0)
-            }
-        }catch (e:Exception){
-            Log.e("mException", "MainActivity, setMenuRecyclerView // Exception : ${e.message}")
-        }
-    }
 
     override fun onStart() {
         super.onStart()
 
-        menuVM.menuList.observe(this){ list : List<MenuModel> ->
-            updateMenuList(list)
-        }
     }
-
 
     override fun onDestroy() {
         super.onDestroy()
-        customAdapter = null
     }
 }
