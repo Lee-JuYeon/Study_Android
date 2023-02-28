@@ -1,4 +1,4 @@
-package com.cavss.studyandroid.recyclerview
+package com.cavss.studyandroid.ui.custom.recyclerview
 
 import android.util.Log
 import androidx.databinding.ViewDataBinding
