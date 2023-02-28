@@ -4,7 +4,7 @@
     <data>
         <variable
             name="model"
-            type="com.cavss.studyandroid.ui.menu.MenuModel" />
+            type="com.cavss.studyandroid.ui.screen.menu.MenuModel" />
 
         <variable
             name="position"
@@ -12,7 +12,7 @@
 
         <variable
             name="clickCallback"
-            type="com.cavss.studyandroid.recyclerview.ViewHolderClickListener" />
+            type="com.cavss.studyandroid.ui.custom.recyclerview.ViewHolderClickListener" />
     </data>
 
     <LinearLayout
