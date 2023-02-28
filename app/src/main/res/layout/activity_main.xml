@@ -9,10 +9,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/menuRecyclerView"
+        <FrameLayout
+            android:id="@+id/frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
     </LinearLayout>
 </layout>
 
