@@ -1,16 +1,9 @@
-package com.cavss.studyandroid.ui.menu
+package com.cavss.studyandroid.ui.screen.menu
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import io.reactivex.Observable
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.subjects.BehaviorSubject
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 class MenuVM() : ViewModel() {
     /*
@@ -19,10 +12,10 @@ class MenuVM() : ViewModel() {
         따라서, get,set메서드를 사용하면 필요한 경우에만 변수에 접근할 수 있다.
      */
     private val _menuList = MutableLiveData(listOf<MenuModel>())
-    val menuList : LiveData<List<MenuModel>>
+    val menuList: LiveData<List<MenuModel>>
         get() = _menuList
 
-    fun setMenuList(newList : List<MenuModel>){
+    fun setMenuList(newList: List<MenuModel>) {
         try {
             /*
             _menuList.value = newList 가 아닌
@@ -32,21 +25,30 @@ class MenuVM() : ViewModel() {
             */
             _menuList.postValue(emptyList())
             _menuList.postValue(newList)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             Log.e("mException", "MenuVM, setMenuList // Exception : ${e.localizedMessage}")
         }
     }
 
+    private val fragmentType = MutableLiveData<Menu>(Menu.RecyclerView)
+    fun setFragmentType(type : Menu){ fragmentType.postValue(type) }
+    val getFragmentType : LiveData<Menu>
+        get() = fragmentType
+
+
     init {
         setMenuList(
-            listOf<MenuModel>(
-                MenuModel("RecyclerView"),
-                MenuModel("Fragments"),
-                MenuModel("ViewPager"),
-                MenuModel("Location based AR"),
-                MenuModel("Retrofit")
+            listOf(
+                MenuModel(Menu.RecyclerView.rawValue),
+                MenuModel(Menu.LocationBasedAR.rawValue),
+                MenuModel(Menu.Fragment.rawValue),
+                MenuModel(Menu.ViewPager2.rawValue),
+                MenuModel(Menu.GridView.rawValue),
+                MenuModel(Menu.Blur.rawValue)
             )
         )
+
+        setFragmentType(Menu.RecyclerView)
         Log.d("mDebug", "MenuVM, init // init on")
     }
 
@@ -54,6 +56,7 @@ class MenuVM() : ViewModel() {
         super.onCleared()
         _menuList.postValue(emptyList())
     }
+}
 
 //    private val compositeDisposable = CompositeDisposable()
 //    val data = repository.getData()
@@ -78,7 +81,7 @@ class MenuVM() : ViewModel() {
 //            }
 //        }
 //    }
-}
+
 
 /*
     private var job: Job? = null
