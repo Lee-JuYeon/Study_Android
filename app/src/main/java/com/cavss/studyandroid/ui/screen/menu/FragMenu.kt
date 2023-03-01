@@ -57,6 +57,9 @@ class FragMenu : Fragment() {
                         Menu.LocationBasedAR.rawValue -> {
                             menuVM.setFragmentType(Menu.LocationBasedAR)
                         }
+                        Menu.BottomNavigation.rawValue -> {
+                            menuVM.setFragmentType(Menu.BottomNavigation)
+                        }
                         Menu.Fragment.rawValue -> {
                             menuVM.setFragmentType(Menu.Fragment)
                         }

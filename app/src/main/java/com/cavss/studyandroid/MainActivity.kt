@@ -20,6 +20,7 @@ import com.cavss.studyandroid.ui.screen.menu.MenuVM
 import com.cavss.studyandroid.BR
 import com.cavss.studyandroid.skill.permission.PermissionManager
 import com.cavss.studyandroid.ui.custom.ar.FragLocationBasedAR
+import com.cavss.studyandroid.ui.custom.bottomnavigation.FragBottomNavi
 import com.cavss.studyandroid.ui.screen.menu.FragMenu
 import com.cavss.studyandroid.ui.screen.menu.Menu
 import com.cavss.studyandroid.ui.screen.menu.Menu.*
@@ -41,12 +42,14 @@ class MainActivity : AppCompatActivity() {
 
     private val fragMenu = FragMenu()
     private val fragAR = FragLocationBasedAR()
+    private val fragBottomNavi = FragBottomNavi()
     private fun changeFragment(frag : Menu){
         try{
             val manager = (this as FragmentActivity).supportFragmentManager.beginTransaction()
             when(frag){
                 RecyclerView -> manager.replace(R.id.frame, fragMenu).commit()
                 LocationBasedAR -> manager.replace(R.id.frame, fragAR).commit()
+                BottomNavigation -> manager.replace(R.id.frame, fragBottomNavi).commit()
                 Fragment -> manager.replace(R.id.frame, fragMenu).commit()
                 ViewPager2 -> manager.replace(R.id.frame, fragMenu).commit()
                 GridView -> manager.replace(R.id.frame, fragMenu).commit()

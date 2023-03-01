@@ -41,6 +41,7 @@ class MenuVM() : ViewModel() {
             listOf(
                 MenuModel(Menu.RecyclerView.rawValue),
                 MenuModel(Menu.LocationBasedAR.rawValue),
+                MenuModel(Menu.BottomNavigation.rawValue),
                 MenuModel(Menu.Fragment.rawValue),
                 MenuModel(Menu.ViewPager2.rawValue),
                 MenuModel(Menu.GridView.rawValue),

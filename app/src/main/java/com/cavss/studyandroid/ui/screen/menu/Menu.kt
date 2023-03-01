@@ -3,6 +3,7 @@ package com.cavss.studyandroid.ui.screen.menu
 enum class Menu(val rawValue : String) {
     RecyclerView("RecyclerView"),
     LocationBasedAR("LocationBasedAR"),
+    BottomNavigation("BottomNavigation"),
     Fragment("Fragment"),
     ViewPager2("ViewPager2"),
     GridView("GridView"),
