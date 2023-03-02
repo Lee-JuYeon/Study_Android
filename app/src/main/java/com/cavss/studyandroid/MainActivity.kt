@@ -47,13 +47,13 @@ class MainActivity : AppCompatActivity() {
         try{
             val manager = (this as FragmentActivity).supportFragmentManager.beginTransaction()
             when(frag){
-                RecyclerView -> manager.replace(R.id.frame, fragMenu).commit()
-                LocationBasedAR -> manager.replace(R.id.frame, fragAR).commit()
-                BottomNavigation -> manager.replace(R.id.frame, fragBottomNavi).commit()
-                Fragment -> manager.replace(R.id.frame, fragMenu).commit()
-                ViewPager2 -> manager.replace(R.id.frame, fragMenu).commit()
-                GridView -> manager.replace(R.id.frame, fragMenu).commit()
-                Blur -> manager.replace(R.id.frame, fragMenu).commit()
+                RecyclerView -> manager.replace(binding.frame.id, fragMenu).commit()
+                LocationBasedAR -> manager.replace(binding.frame.id, fragAR).commit()
+                BottomNavigation -> manager.replace(binding.frame.id, fragBottomNavi).commit()
+                Fragment -> manager.replace(binding.frame.id, fragMenu).commit()
+                ViewPager2 -> manager.replace(binding.frame.id, fragMenu).commit()
+                GridView -> manager.replace(binding.frame.id, fragMenu).commit()
+                Blur -> manager.replace(binding.frame.id, fragMenu).commit()
             }
         }catch (e:Exception){
             Log.e("mException", "MainActivity, changeFragment  // Exception : ${e.message}")
