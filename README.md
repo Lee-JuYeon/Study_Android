@@ -13,7 +13,7 @@
 | Fragment|| 😔 |
 | ViewPager|| 😔 |
 | GridView|| 😔 |
-| Location Based AR|| 😔 |
+| [BottomNavigation](https://github.com/Lee-JuYeon/Study_Android/tree/master/app/src/main/java/com/cavss/studyandroid/ui/custom/bottomnavigation) | BottomNavigation + FrameLayout + ViewModel | ✅ |
 | Location Based AR|| 😔 |
 | Blur || 😔 |
 
