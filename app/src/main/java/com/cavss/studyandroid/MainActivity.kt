@@ -3,23 +3,14 @@ package com.cavss.studyandroid
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.cavss.studyandroid.databinding.ActivityMainBinding
-import com.cavss.studyandroid.databinding.ItemMainBinding
-import com.cavss.studyandroid.ui.custom.recyclerview.BaseAdapter
-import com.cavss.studyandroid.ui.custom.recyclerview.BaseDiffUtil
-import com.cavss.studyandroid.ui.custom.recyclerview.BaseViewHolder
-import com.cavss.studyandroid.ui.custom.recyclerview.ViewHolderClickListener
-import com.cavss.studyandroid.ui.screen.menu.MenuModel
+import com.cavss.studyandroid.skill.aes256.AESHelper
+import com.cavss.studyandroid.skill.aes256.ExampleAES256
 import com.cavss.studyandroid.ui.screen.menu.MenuVM
-import com.cavss.studyandroid.BR
-import com.cavss.studyandroid.skill.permission.PermissionManager
-import com.cavss.studyandroid.ui.custom.ar.FragLocationBasedAR
+import com.cavss.studyandroid.ui.screen.ar.FragLocationBasedAR
 import com.cavss.studyandroid.ui.custom.bottomnavigation.FragBottomNavi
 import com.cavss.studyandroid.ui.screen.menu.FragMenu
 import com.cavss.studyandroid.ui.screen.menu.Menu
@@ -66,6 +57,14 @@ class MainActivity : AppCompatActivity() {
         binding.run{
 
         }
+        // DB
+        App.INSTANCE
+        var exampleAES256 = ExampleAES256()
+        exampleAES256.apply {
+            setContext(this@MainActivity)
+            testInFragment()
+        }
+
 
         /*
         자식 Fragment들과 같은 인스턴스를 가진 VM을 공유하기 위해선
