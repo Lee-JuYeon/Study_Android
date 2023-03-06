@@ -26,7 +26,7 @@
 |Coroutine|😔|
 |Flow|😔|
 |Room|😔|
-|AES256|😔|
+|AES256|✅|
 |Permission|🤔|
 |Permission JetpackCompose|😔|
 |Retrofit2.0|😔|
